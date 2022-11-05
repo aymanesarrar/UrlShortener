@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest } from "next/server";
 import prisma from "../db/prisma";
 
 const deleteAllRecords = async (req: NextApiRequest, res: NextApiResponse) => {

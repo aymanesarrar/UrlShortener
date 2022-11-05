@@ -12,10 +12,10 @@ const getSlug = async (req: NextApiRequest, res: NextApiResponse) => {
     if (data) {
       const { url } = data;
       if (url.length !== 0) {
-        return res.redirect(url);
+        return res.json(url);
       }
-    }
+    } else return res.json({ msg: "URL not found" });
   }
-  return res.send({ msg: "slug" });
+  return res.status(200).json({ msg: "slug" });
 };
 export default getSlug;

@@ -3,13 +3,9 @@ import { nanoid } from "nanoid";
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../db/prisma";
 
-type Data = {
-  name: string;
-};
-
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse
 ) {
   const { url } = req.body;
   const data = await prisma.shortLink.create({
@@ -18,6 +14,6 @@ export default async function handler(
       slug: nanoid(),
     },
   });
-  console.log(data);
-  res.status(200).json({ name: "John Doe" });
+
+  res.status(200).json(data);
 }
