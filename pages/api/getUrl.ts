@@ -1,4 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { nanoid } from "nanoid";
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../db/prisma";
 
@@ -14,7 +15,7 @@ export default async function handler(
   const data = await prisma.shortLink.create({
     data: {
       url: url,
-      slug: "test",
+      slug: nanoid(),
     },
   });
   console.log(data);

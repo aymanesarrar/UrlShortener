@@ -11,8 +11,8 @@ datasource db {
 }
 
 model ShortLink {
-  Id Int @id @default(autoincrement())
+  Id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
-  url String
-  slug String
+  url       String
+  slug      String
 }
