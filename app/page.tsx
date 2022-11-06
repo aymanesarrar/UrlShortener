@@ -2,10 +2,12 @@
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { ChangeEventHandler, useState } from "react";
+import { GoClippy } from "react-icons/go";
 
 export default function Home() {
   const [short, setShort] = useState("");
   const [link, setLink] = useState("");
+  const [copied, setCopied] = useState(false);
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setLink(e.target.value);
@@ -23,10 +25,13 @@ export default function Home() {
     const { origin, slug } = data;
     setShort(`${origin.split("/")[2]}/${slug}`);
   };
-
+  const copyUrl = () => {
+    navigator.clipboard.writeText(short);
+    setCopied(true);
+  };
   return (
     <div className="min-h-screen bg-black">
-      <div className="border-2 border-red-500 max-w-5xl  min-h-screen text-white mx-auto flex flex-col items-center justify-center">
+      <div className=" max-w-5xl  min-h-screen text-white mx-auto flex flex-col items-center justify-center gap-6">
         <div className="flex gap-6 w-full justify-center">
           <input
             type="text"
@@ -41,9 +46,13 @@ export default function Home() {
             short me
           </button>
         </div>
-        <div>
-          <p>{short}</p>
-        </div>
+        {short.length !== 0 && (
+          <div className="border-2 border-white rounded-xl p-2 w-1/2 flex items-center justify-between">
+            <p>{short}</p>
+            <GoClippy onClick={copyUrl} className="text-white cursor-pointer" />
+          </div>
+        )}
+        {copied && <p>url copied !!!</p>}
       </div>
     </div>
   );
