@@ -7,11 +7,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { url } = req.body;
+  const { url, slug } = req.body;
   const data = await prisma.shortLink.create({
     data: {
       url: url,
-      slug: nanoid(),
+      slug: slug || nanoid(),
     },
   });
 

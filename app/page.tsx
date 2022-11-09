@@ -7,10 +7,14 @@ import { GoClippy } from "react-icons/go";
 export default function Home() {
   const [short, setShort] = useState("");
   const [link, setLink] = useState("");
+  const [slugg, setSlug] = useState("");
   const [copied, setCopied] = useState(false);
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setLink(e.target.value);
+  };
+  const handleSlug: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setSlug(e.target.value);
   };
   const getShortLink = async () => {
     const data = await (
@@ -19,7 +23,7 @@ export default function Home() {
         headers: {
           "content-type": "application/json",
         },
-        body: JSON.stringify({ url: link }),
+        body: JSON.stringify({ url: link, slug: slugg }),
       })
     ).json();
     const { origin, slug } = data;
@@ -31,23 +35,31 @@ export default function Home() {
   };
   return (
     <div className="min-h-screen bg-black">
-      <div className=" max-w-5xl  min-h-screen text-white mx-auto flex flex-col items-center justify-center gap-6">
-        <div className="flex gap-6 w-full justify-center">
+      <div className="flex flex-col items-center justify-center max-w-5xl min-h-screen gap-6 mx-auto text-white ">
+        <div className="flex justify-center w-full gap-6">
           <input
             type="text"
-            className=" p-2 outline-none bg-black border-b-2 w-1/2"
+            className="w-1/2 p-2 bg-black border-b-2 outline-none "
             onChange={handleChange}
             value={link}
+            placeholder="enter url"
+          />
+          <input
+            type="text"
+            className="w-1/3 p-2 bg-black border-b-2 outline-none "
+            onChange={handleSlug}
+            value={slugg}
+            placeholder="enter slug"
           />
           <button
             onClick={getShortLink}
-            className="bg-pink-500 px-4 py-1 rounded-xl"
+            className="px-4 py-1 bg-pink-500 rounded-xl"
           >
             short me
           </button>
         </div>
         {short.length !== 0 && (
-          <div className="border-2 border-white rounded-xl p-2 w-1/2 flex items-center justify-between">
+          <div className="flex items-center justify-between w-1/2 p-2 border-2 border-white rounded-xl">
             <p>{short}</p>
             <GoClippy onClick={copyUrl} className="text-white cursor-pointer" />
           </div>
